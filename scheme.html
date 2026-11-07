@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARUTHAM | Farmer Scheme Directory</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f3f8f3;color:#183c2b}
+header{background:#12452d;color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:bold;color:#a8ed91}
+.hero{background:linear-gradient(120deg,#145d37,#31945a);color:white;padding:45px 7%}
+.hero h1{font-size:36px;margin-bottom:12px}
+.hero p{line-height:1.7}
+.container{width:90%;max-width:1250px;margin:35px auto}
+.search{width:100%;padding:15px;border:1px solid #cbded0;border-radius:9px;margin:20px 0;font-size:15px}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{padding:10px 15px;border:1px solid #cbded0;background:white;border-radius:25px;cursor:pointer}
+.filters button.active{background:#176e3c;color:white}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:white;padding:21px;border-radius:13px;border:1px solid #dfebdf;box-shadow:0 3px 12px #00000008}
+.card h3{font-size:17px;margin:12px 0}
+.card p{font-size:13px;color:#687c6e;line-height:1.6}
+.tag{display:inline-block;background:#e6f5e9;color:#176e3c;padding:6px 10px;border-radius:20px;font-size:11px}
+.btn{display:inline-block;background:#176e3c;color:white;text-decoration:none;padding:10px 14px;border:0;border-radius:7px;margin-top:13px;cursor:pointer;font-size:13px}
+.secondary{background:#e9f4eb;color:#176e3c}
+.notice{background:#fff5d9;padding:16px;border-radius:9px;margin:25px 0;font-size:13px;line-height:1.6}
+.count{margin:15px 0;color:#597361}
+.modal{display:none;position:fixed;inset:0;background:#0009;justify-content:center;align-items:center;padding:15px;z-index:5}
+.modal-box{background:white;padding:25px;border-radius:14px;width:100%;max-width:600px;max-height:85vh;overflow:auto}
+.modal-box h2{color:#176e3c;margin-bottom:15px}
+.modal-box p{font-size:14px;line-height:1.7;margin:12px 0}
+.close{float:right;border:0;padding:8px;cursor:pointer}
+footer{background:#123c2a;color:white;text-align:center;padding:28px;margin-top:45px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.grid{grid-template-columns:1fr}header{gap:10px;flex-wrap:wrap}.hero h1{font-size:28px}}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">🌱 MARUTHAM</div>
+ <div>Government Scheme Finder</div>
+</header>
+
+<section class="hero">
+ <h1>Government Schemes for Every Farmer</h1>
+ <p>Discover agricultural assistance, insurance, loans,
+ irrigation support, machinery subsidies and more.</p>
+</section>
+
+<main class="container">
+
+<h2>🌾 Explore Farmer Schemes</h2>
+<p class="count">Search and filter agricultural programmes.</p>
+
+<input class="search" id="search"
+placeholder="Search scheme name, category or benefits...">
+
+<div class="filters" id="filters"></div>
+
+<p class="count" id="count"></p>
+
+<div class="grid" id="grid"></div>
+
+<div class="notice">
+<strong>Important:</strong> This directory is a demonstration
+catalogue, not a live government eligibility database.
+Benefits, application windows and eligibility can change.
+Verify each scheme's current guidelines with its official
+department before applying.
+</div>
+
+<h2>Want to explore the wider government catalogue?</h2>
+<p style="margin-top:10px;line-height:1.7">
+Browse the official Government of India scheme discovery
+platform for Central and State Government schemes.
+</p>
+
+<a class="btn" href="https://www.myscheme.gov.in/search/category/Agriculture%2CRural%20%26%20Environment"
+target="_blank" rel="noopener noreferrer">
+Explore Official Agriculture Directory ↗
+</a>
+
+</main>
+
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal()">✕ Close</button>
+  <div id="details"></div>
+ </div>
+</div>
+
+<footer>
+<h3>🌱 MARUTHAM</h3>
+<p>Empowering Farmers Through Technology</p>
+<p>Manthan 3.0 | 2026</p>
+</footer>
+
+<script>
+
+// Curated genuine government programmes.
+// Verify current guidelines through the official links.
+
+const schemes = [
+{
+name:"PM-KISAN Samman Nidhi",
+category:"Income Support",
+benefit:"Income support of ₹6,000 annually for eligible farmer families under current rules.",
+eligibility:"Eligible landholding farmer families, subject to exclusion criteria.",
+docs:"Aadhaar, bank account and land records, as applicable.",
+link:"https://pmkisan.gov.in/"
+},
+{
+name:"Pradhan Mantri Kisan Maandhan Yojana",
+category:"Pension",
+benefit:"Assured pension of ₹3,000 per month after age 60 for eligible enrolled farmers.",
+eligibility:"Eligible small and marginal farmers aged 18–40, subject to scheme conditions.",
+docs:"Aadhaar, bank details and landholding information.",
+link:"https://maandhan.in/"
+},
+{
+name:"Pradhan Mantri Fasal Bima Yojana",
+category:"Insurance",
+benefit:"Crop insurance protection against specified crop losses.",
+eligibility:"Farmers cultivating notified crops in notified areas, subject to enrollment rules.",
+docs:"Identity, bank, land or cultivation records and crop details.",
+link:"https://pmfby.gov.in/"
+},
+{
+name:"Restructured Weather Based Crop Insurance Scheme",
+category:"Insurance",
+benefit:"Insurance protection against specified weather-related risks.",
+eligibility:"Farmers growing notified crops in notified areas.",
+docs:"Identity, bank and cultivation details.",
+link:"https://pmfby.gov.in/"
+},
+{
+name:"Modified Interest Subvention Scheme",
+category:"Credit",
+benefit:"Interest support on eligible short-term agricultural loans.",
+eligibility:"Eligible agricultural borrowers and loans through participating institutions.",
+docs:"Bank KYC, loan and farmer records.",
+link:"https://www.myscheme.gov.in/"
+},
+{
+name:"Kisan Credit Card",
+category:"Credit",
+benefit:"Institutional credit for eligible farming and allied activities.",
+eligibility:"Eligible farmers and qualifying agricultural borrowers.",
+docs:"Identity, address, land or cultivation records and bank documents.",
+link:"https://www.myscheme.gov.in/"
+},
+{
+name:"Agriculture Infrastructure Fund",
+category:"Infrastructure",
+benefit:"Eligible financing support and interest subvention for agricultural infrastructure.",
+eligibility:"Eligible farmers, FPOs, cooperatives and other permitted entities.",
+docs:"Project report, identity, land or business records and lender documents.",
+link:"https://agriinfra.dac.gov.in/"
+},
+{
+name:"Formation and Promotion of 10,000 FPOs",
+category:"Infrastructure",
+benefit:"Support for formation, management and development of Farmer Producer Organisations.",
+eligibility:"Eligible farmer producer organisations under programme guidelines.",
+docs:"FPO registration, member and organisational documents.",
+link:"https://sfacindia.com/"
+},
+{
+name:"PM-AASHA",
+category:"Marketing",
+benefit:"Price support and procurement interventions under applicable components.",
+eligibility:"Farmers growing eligible notified crops under applicable procurement arrangements.",
+docs:"Farmer registration, crop and land or cultivation records.",
+link:"https://www.india.gov.in/"
+},
+{
+name:"Per Drop More Crop",
+category:"Irrigation",
+benefit:"Support for eligible micro-irrigation systems.",
+eligibility:"Farmers meeting state and component-specific requirements.",
+docs:"Land, identity, bank and irrigation project details.",
+link:"https://pmksy.gov.in/"
+},
+{
+name:"Pradhan Mantri Krishi Sinchayee Yojana",
+category:"Irrigation",
+benefit:"Support for improving irrigation coverage and water-use efficiency.",
+eligibility:"Depends on programme component and state guidelines.",
+docs:"Land and project-related documents.",
+link:"https://pmksy.gov.in/"
+},
+{
+name:"PM-KUSUM",
+category:"Solar Energy",
+benefit:"Support for eligible agricultural solarisation and renewable energy installations.",
+eligibility:"Depends on component, state allocation and approved applicants.",
+docs:"Land, electricity connection, identity and bank documents.",
+link:"https://pmkusum.mnre.gov.in/"
+},
+{
+name:"Soil Health Card Scheme",
+category:"Soil",
+benefit:"Soil testing and nutrient management recommendations.",
+eligibility:"Farmers can access services through participating agriculture departments.",
+docs:"Farm details and soil sample information.",
+link:"https://soilhealth.dac.gov.in/"
+},
+{
+name:"National Mission on Natural Farming",
+category:"Organic Farming",
+benefit:"Support for eligible natural farming activities and farmer training.",
+eligibility:"Farmers and clusters covered under programme implementation.",
+docs:"Farmer registration and farm or cluster information.",
+link:"https://agriwelfare.gov.in/"
+},
+{
+name:"Paramparagat Krishi Vikas Yojana",
+category:"Organic Farming",
+benefit:"Support for eligible cluster-based organic farming and certification activities.",
+eligibility:"Participating farmer groups and clusters under programme rules.",
+docs:"Farmer group and land records.",
+link:"https://pgsindia-ncof.gov.in/"
+},
+{
+name:"Mission for Integrated Development of Horticulture",
+category:"Horticulture",
+benefit:"Component-based support for horticulture development and infrastructure.",
+eligibility:"Eligible horticulture farmers and project applicants.",
+docs:"Land, crop, project and bank details.",
+link:"https://midh.gov.in/"
+},
+{
+name:"National Food Security Mission",
+category:"Crop Development",
+benefit:"Support for productivity improvement through eligible crop development interventions.",
+eligibility:"Farmers in programme areas and participating crop clusters.",
+docs:"Farmer, crop and land details.",
+link:"https://nfsm.gov.in/"
+},
+{
+name:"Sub-Mission on Agricultural Mechanization",
+category:"Machinery",
+benefit:"Assistance for eligible farm machinery and mechanisation activities.",
+eligibility:"Farmers and approved entities according to state implementation rules.",
+docs:"Identity, land, bank and machinery quotation details.",
+link:"https://agrimachinery.nic.in/"
+},
+{
+name:"Sub-Mission on Seeds and Planting Material",
+category:"Seeds",
+benefit:"Support for quality seed production and availability under programme components.",
+eligibility:"Eligible farmers, seed producers and participating organisations.",
+docs:"Farmer or organisation registration and seed-related records.",
+link:"https://seednet.gov.in/"
+},
+{
+name:"Rashtriya Krishi Vikas Yojana",
+category:"Crop Development",
+benefit:"Supports state-led agricultural development projects and approved interventions.",
+eligibility:"Depends on the state-approved project or component.",
+docs:"Project and applicant documents as required.",
+link:"https://agriwelfare.gov.in/"
+},
+{
+name:"Agriculture Technology Management Agency",
+category:"Training",
+benefit:"Agricultural extension, demonstrations and farmer training.",
+eligibility:"Farmers covered by participating extension programmes.",
+docs:"Basic farmer and farm details.",
+link:"https://agriwelfare.gov.in/"
+},
+{
+name:"Agri-Clinics and Agri-Business Centres",
+category:"Entrepreneurship",
+benefit:"Training and support for eligible agriculture-related enterprises.",
+eligibility:"Eligible agriculture graduates and qualifying applicants.",
+docs:"Educational, identity and business project documents.",
+link:"https://www.agriclinics.net/"
+},
+{
+name:"National Agriculture Market (e-NAM)",
+category:"Marketing",
+benefit:"Online trading and improved price discovery through participating markets.",
+eligibility:"Eligible farmers and registered market participants.",
+docs:"Farmer registration, identity and bank details.",
+link:"https://enam.gov.in/"
+},
+{
+name:"Mission for Integrated Development of Horticulture – Nursery Development",
+category:"Horticulture",
+benefit:"Component-based assistance for eligible horticulture nursery development.",
+eligibility:"Approved nursery applicants under applicable state guidelines.",
+docs:"Project, land and nursery details.",
+link:"https://midh.gov.in/"
+},
+{
+name:"National Mission on Edible Oils – Oil Palm",
+category:"Crop Development",
+benefit:"Support for eligible oil palm planting material and cultivation activities.",
+eligibility:"Farmers in identified areas under programme guidelines.",
+docs:"Land, farmer registration and plantation details.",
+link:"https://nmeo.dac.gov.in/"
+},
+{
+name:"National Mission on Edible Oils – Oilseeds",
+category:"Crop Development",
+benefit:"Support for eligible oilseed production and productivity interventions.",
+eligibility:"Farmers covered by notified programme activities.",
+docs:"Farmer and crop records.",
+link:"https://agriwelfare.gov.in/"
+},
+{
+name:"Mission Organic Value Chain Development for North Eastern Region",
+category:"Organic Farming",
+benefit:"Support for organic production and value-chain development.",
+eligibility:"Eligible farmers and organisations in the North Eastern states.",
+docs:"Farm and group records, certification and project documents.",
+link:"https://movcd.dac.gov.in/"
+},
+{
+name:"National Beekeeping and Honey Mission",
+category:"Allied Agriculture",
+benefit:"Support for eligible beekeeping and honey-sector development.",
+eligibility:"Eligible beekeepers, farmer groups and enterprises.",
+docs:"Project, identity and bank records.",
+link:"https://nbb.gov.in/"
+},
+{
+name:"National Bamboo Mission",
+category:"Horticulture",
+benefit:"Support for eligible bamboo cultivation and value-chain activities.",
+eligibility:"Farmers and approved organisations under component guidelines.",
+docs:"Land, project and applicant details.",
+link:"https://nbm.nic.in/"
+},
+{
+name:"National Livestock Mission",
+category:"Livestock",
+benefit:"Support for eligible livestock entrepreneurship and development activities.",
+eligibility:"Eligible individuals, groups and organisations under scheme rules.",
+docs:"Project report, identity, bank and livestock details.",
+link:"https://dahd.nic.in/"
+},
+{
+name:"Rashtriya Gokul Mission",
+category:"Livestock",
+benefit:"Support for indigenous bovine breed development and related activities.",
+eligibility:"Participating farmers, institutions and eligible organisations.",
+docs:"Animal and beneficiary details as required.",
+link:"https://dahd.nic.in/"
+},
+{
+name:"Livestock Health and Disease Control Programme",
+category:"Livestock",
+benefit:"Animal health and disease prevention services under programme components.",
+eligibility:"Livestock owners covered by the relevant services.",
+docs:"Livestock identification and owner details.",
+link:"https://dahd.nic.in/"
+},
+{
+name:"National Programme for Dairy Development",
+category:"Dairy",
+benefit:"Support for eligible dairy infrastructure and productivity activities.",
+eligibility:"Eligible dairy cooperatives and participating organisations.",
+docs:"Organisation, project and financial records.",
+link:"https://dahd.nic.in/"
+},
+{
+name:"Animal Husbandry Infrastructure Development Fund",
+category:"Dairy",
+benefit:"Financial support for eligible animal husbandry infrastructure projects.",
+eligibility:"Eligible entrepreneurs, companies, FPOs and other permitted entities.",
+docs:"Project report, financial statements and KYC.",
+link:"https://ahidf.udyamimitra.in/"
+},
+{
+name:"Pradhan Mantri Matsya Sampada Yojana",
+category:"Fisheries",
+benefit:"Support for eligible fisheries and aquaculture development activities.",
+eligibility:"Eligible fishers, fish farmers and fisheries enterprises.",
+docs:"Identity, bank, project and aquaculture records.",
+link:"https://pmmsy.dof.gov.in/"
+},
+{
+name:"Fisheries and Aquaculture Infrastructure Development Fund",
+category:"Fisheries",
+benefit:"Financing support for eligible fisheries infrastructure projects.",
+eligibility:"Eligible fisheries enterprises and project applicants.",
+docs:"Project and financial documents.",
+link:"https://dof.gov.in/"
+},
+{
+name:"Pradhan Mantri Kisan Sampada Yojana",
+category:"Food Processing",
+benefit:"Support for eligible food processing and preservation infrastructure.",
+eligibility:"Eligible project applicants under relevant components.",
+docs:"Project report, business and financial documents.",
+link:"https://mofpi.gov.in/"
+},
+{
+name:"Krishi Udan",
+category:"Marketing",
+benefit:"Facilitates air transportation of agricultural produce through programme support.",
+eligibility:"Eligible agricultural cargo operators and supply-chain participants.",
+docs:"Cargo and operator documents as applicable.",
+link:"https://www.civilaviation.gov.in/"
+},
+{
+name:"Atal Bhujal Yojana",
+category:"Water Management",
+benefit:"Community-based groundwater management and conservation support.",
+eligibility:"Participating communities in covered areas.",
+docs:"Local participation and programme records.",
+link:"https://ataljal.gov.in/"
+},
+{
+name:"Watershed Development Component of PMKSY",
+category:"Water Management",
+benefit:"Watershed development, water conservation and land restoration activities.",
+eligibility:"Communities and beneficiaries in approved project areas.",
+docs:"Land and beneficiary details as required by local authorities.",
+link:"https://wdcpmksy.dolr.gov.in/"
+},
+{
+name:"Digital Agriculture Mission",
+category:"Digital Agriculture",
+benefit:"Development of digital public infrastructure and agricultural services.",
+eligibility:"Services depend on the specific digital programme and participating state.",
+docs:"Farmer identity and land or farm records where required.",
+link:"https://agriwelfare.gov.in/"
+},
+{
+name:"AgriSURE",
+category:"Entrepreneurship",
+benefit:"Investment support for eligible agriculture and rural enterprises.",
+eligibility:"Eligible agri-startups and rural enterprises under fund conditions.",
+docs:"Business plan, registration and financial records.",
+link:"https://sfacindia.com/"
+}
+];
+
+const categories=["All",...new Set(schemes.map(s=>s.category))];
+let selected="All";
+
+const filters=document.getElementById("filters");
+
+categories.forEach(category=>{
+ const button=document.createElement("button");
+ button.textContent=category;
+ if(category==="All")button.classList.add("active");
+ button.onclick=()=>{
+  selected=category;
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  render();
+ };
+ filters.appendChild(button);
+});
+
+function render(){
+ const query=document.getElementById("search").value.toLowerCase();
+ const filtered=schemes.filter(s=>{
+  return (selected==="All"||s.category===selected) &&
+  (s.name+" "+s.category+" "+s.benefit+" "+s.eligibility).toLowerCase().includes(query);
+ });
+
+ document.getElementById("count").textContent=
+ `${filtered.length} programmes in this curated demonstration directory`;
+
+ const grid=document.getElementById("grid");
+ grid.replaceChildren();
+
+ if(!filtered.length){
+  grid.textContent="No matching schemes found.";
+  return;
+ }
+
+ filtered.forEach((s,i)=>{
+  const card=document.createElement("article");
+  card.className="card";
+
+  const tag=document.createElement("span");
+  tag.className="tag";
+  tag.textContent=s.category;
+
+  const heading=document.createElement("h3");
+  heading.textContent=s.name;
+
+  const description=document.createElement("p");
+  description.textContent=s.benefit;
+
+  const button=document.createElement("button");
+  button.className="btn";
+  button.textContent="View Details →";
+  button.onclick=()=>showDetails(s);
+
+  card.append(tag,heading,description,button);
+  grid.appendChild(card);
+ });
+}
+
+function showDetails(s){
+ const details=document.getElementById("details");
+ details.replaceChildren();
+
+ const heading=document.createElement("h2");
+ heading.textContent=s.name;
+ details.appendChild(heading);
+
+ [["Category",s.category],
+  ["Benefits",s.benefit],
+  ["Eligibility",s.eligibility],
+  ["Documents",s.docs]].forEach(([label,value])=>{
+   const p=document.createElement("p");
+   const strong=document.createElement("strong");
+   strong.textContent=label+": ";
+   p.append(strong,document.createTextNode(value));
+   details.appendChild(p);
+ });
+
+ const link=document.createElement("a");
+ link.className="btn";
+ link.href=s.link;
+ link.target="_blank";
+ link.rel="noopener noreferrer";
+ link.textContent="Visit Official Portal ↗";
+ details.appendChild(link);
+
+ document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+ document.getElementById("modal").style.display="none";
+}
+
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("modal").addEventListener("click",e=>{
+ if(e.target.id==="modal")closeModal();
+});
+
+render();
+
+</script>
+</body>
+</html>

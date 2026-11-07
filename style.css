@@ -1,0 +1,1042 @@
+
+/* =========================================
+   MARUTHAM - MAIN STYLESHEET
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green: #075b32;
+  --dark: #064326;
+  --leaf: #168b3d;
+  --light: #eaf5d9;
+  --cream: #fffdf2;
+  --gold: #e6c34e;
+  --text: #183b27;
+  --muted: #70816f;
+  --border: #dce9d3;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e9eee9;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================
+   FARMER LOGIN
+========================================= */
+
+.farmer-login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top right, #d9efc8, transparent 40%),
+    linear-gradient(135deg, #eaf5d9, #f8fbf3);
+  overflow-y: auto;
+}
+
+.farmer-login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 34px 30px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 15px 45px #174d2915;
+  text-align: center;
+}
+
+.login-logo {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  background: var(--light);
+  border-radius: 23px;
+  font-size: 39px;
+}
+
+.farmer-login-card h1 {
+  color: var(--green);
+  font-size: 27px;
+  margin-bottom: 9px;
+}
+
+.farmer-login-card > p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 27px;
+}
+
+.farmer-login-card form {
+  text-align: left;
+}
+
+.farmer-login-card label {
+  display: block;
+  margin: 16px 0 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.farmer-login-card input,
+.farmer-login-card select {
+  width: 100%;
+  min-height: 49px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: #fbfdf9;
+  color: var(--text);
+  outline: none;
+}
+
+.farmer-login-card input:focus,
+.farmer-login-card select:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px #168b3d18;
+}
+
+.farmer-login-card .green-button {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.farmer-login-card > small {
+  display: block;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   MAIN APP
+========================================= */
+
+.app {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #f8fbf6;
+  position: relative;
+  padding-bottom: 88px;
+  box-shadow: 0 0 35px #00000008;
+}
+
+.topbar {
+  height: 67px;
+  padding: 0 21px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #edf2eb;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--green);
+  cursor: pointer;
+}
+
+.logo {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--light);
+  font-size: 23px;
+}
+
+.icon-button {
+  width: 39px;
+  height: 39px;
+  border: 0;
+  border-radius: 12px;
+  background: #f1f7ee;
+  color: var(--green);
+  font-size: 21px;
+}
+
+/* =========================================
+   SCREENS
+========================================= */
+
+.screen {
+  display: none;
+  animation: screenFade .25s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes screenFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  width: 100%;
+}
+
+.screen-content {
+  padding: 17px 19px 25px;
+}
+
+/* =========================================
+   HOME HERO
+========================================= */
+
+.hero {
+  margin: 17px;
+  min-height: 260px;
+  padding: 30px 25px;
+  display: flex;
+  align-items: center;
+  border-radius: 23px;
+  color: white;
+  background:
+    linear-gradient(110deg, #064326 0%, #0c6938 65%, #80a94d 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  content: "🌾";
+  position: absolute;
+  right: 14px;
+  bottom: -13px;
+  font-size: 116px;
+  opacity: .22;
+}
+
+.hero-content {
+  max-width: 390px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  display: inline-block;
+  color: #d8f4bd;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  margin-bottom: 13px;
+}
+
+.hero h1 {
+  font-size: clamp(26px, 5vw, 34px);
+  line-height: 1.16;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  color: #e1f0e1;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.hero-button {
+  margin-top: 20px;
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 10px;
+  background: #e4f7c7;
+  color: var(--dark);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.hero-button span {
+  margin-left: 8px;
+}
+
+/* =========================================
+   WELCOME STRIP
+========================================= */
+
+.welcome-strip {
+  margin: 15px 18px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: #eff7e7;
+  border: 1px solid #e1edd8;
+  border-radius: 13px;
+  color: var(--green);
+  font-size: 14px;
+}
+
+/* =========================================
+   SECTION TITLES
+========================================= */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 27px 20px 14px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.title-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* =========================================
+   SERVICE CARDS
+========================================= */
+
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 0 18px;
+}
+
+.service-card {
+  min-height: 104px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: white;
+  text-align: left;
+  color: var(--text);
+  transition: .2s;
+}
+
+.service-card:active {
+  transform: scale(.98);
+}
+
+.service-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  font-size: 23px;
+}
+
+.crop-card .service-icon {
+  background: #e7f5e4;
+}
+
+.soil-card .service-icon {
+  background: #f1f3d9;
+}
+
+.scheme-card .service-icon {
+  background: #e7eef9;
+}
+
+.market-card .service-icon {
+  background: #fff0dd;
+}
+
+.service-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-text b {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.service-text small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.arrow {
+  color: var(--green);
+  font-size: 23px;
+}
+
+/* =========================================
+   VOICE BANNER
+========================================= */
+
+.voice-banner {
+  width: calc(100% - 36px);
+  min-height: 75px;
+  margin: 21px 18px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(105deg, #0b6035, #218b4c);
+  color: white;
+  text-align: left;
+}
+
+.voice-banner-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff25;
+  font-size: 24px;
+}
+
+.voice-wave {
+  font-size: 19px;
+}
+
+.voice-banner > span:nth-child(3) {
+  flex: 1;
+}
+
+.voice-banner b {
+  display: block;
+  font-size: 14px;
+}
+
+.voice-banner small {
+  display: block;
+  margin-top: 5px;
+  color: #d6efdc;
+  font-size: 11px;
+}
+
+.voice-banner .arrow {
+  color: white;
+}
+
+/* =========================================
+   TIP CARD
+========================================= */
+
+.tip-card {
+  margin: 18px;
+  padding: 17px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.tip-card > span {
+  font-size: 29px;
+}
+
+.tip-card b {
+  display: block;
+  color: var(--green);
+  font-size: 14px;
+}
+
+.tip-card small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================================
+   SUB HEADER
+========================================= */
+
+.sub-header {
+  min-height: 59px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 17px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-header h2 {
+  flex: 1;
+  font-size: 17px;
+  color: var(--green);
+}
+
+.sub-header > span {
+  color: var(--muted);
+}
+
+.back-button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 11px;
+  background: #eff6e9;
+  color: var(--green);
+  font-size: 27px;
+}
+
+/* =========================================
+   GENERAL CARDS
+========================================= */
+
+.info-card,
+.soil-upload {
+  margin: 15px 0;
+  padding: 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 3px 12px #143d2207;
+}
+
+.info-card h3,
+.soil-upload h3 {
+  margin-bottom: 12px;
+  color: var(--green);
+  font-size: 17px;
+}
+
+.info-card p,
+.soil-upload p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 8px 0;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.green-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 45px;
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.green-button:hover {
+  background: var(--dark);
+}
+
+.outline-button {
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* =========================================
+   FORM FIELDS
+========================================= */
+
+.field-label {
+  display: block;
+  margin: 15px 0 7px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.data-input {
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: #fbfdf9;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.data-input:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px #168b3d14;
+}
+
+.info-card .green-button {
+  width: 100%;
+  margin-top: 17px;
+}
+
+.disclaimer {
+  font-size: 11px !important;
+  color: #8a7950 !important;
+  line-height: 1.6;
+}
+
+/* =========================================
+   SOIL HEALTH CARD DATASET
+========================================= */
+
+.soil-dataset-card {
+  background: linear-gradient(145deg, #ffffff, #f5faef);
+  border: 1px solid #d8e9ce;
+}
+
+.soil-dataset-card .hero-tag {
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #e5f3dc;
+  color: var(--green);
+  letter-spacing: .7px;
+  margin-bottom: 12px;
+}
+
+.soil-dataset-card h3 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.dataset-details {
+  margin: 16px 0;
+  display: grid;
+  gap: 9px;
+}
+
+.dataset-details > div {
+  padding: 11px 12px;
+  background: white;
+  border: 1px solid #e5eee0;
+  border-radius: 10px;
+}
+
+.dataset-details b,
+.dataset-details span {
+  display: block;
+}
+
+.dataset-details b {
+  color: var(--green);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.dataset-details span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dataset-link {
+  width: 100%;
+  text-align: center;
+}
+
+/* =========================================
+   SOIL UPLOAD
+========================================= */
+
+.soil-upload {
+  text-align: center;
+  background: #f0f7e9;
+}
+
+.upload-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 15px;
+  border-radius: 10px;
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.upload-button input {
+  display: none;
+}
+
+#soilPreview {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+
+/* =========================================
+   CROP DOCTOR
+========================================= */
+
+.crop-photo {
+  height: 210px;
+  margin: 15px 0;
+  overflow: hidden;
+  border-radius: 16px;
+  position: relative;
+  background: #e9f2e5;
+}
+
+.crop-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 7px 11px;
+  border-radius: 20px;
+  background: #ffffffdf;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 13px 0;
+}
+
+#cropImage {
+  display: none;
+}
+
+.nutrient-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #edf2eb;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.nutrient-row:last-child {
+  border-bottom: 0;
+}
+
+.nutrient-row b {
+  color: var(--green);
+}
+
+/* =========================================
+   VOICE ASSISTANT
+========================================= */
+
+.voice-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-area {
+  min-height: 160px;
+  max-height: 270px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.chat-message {
+  max-width: 88%;
+  margin: 10px 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.assistant-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  background: #edf6e7;
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-logo {
+  font-size: 19px;
+}
+
+.user-message {
+  margin-left: auto;
+  background: var(--green);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.voice-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 10px;
+  gap: 12px;
+}
+
+.sound-wave {
+  color: #78aa65;
+  font-size: 25px;
+  letter-spacing: 5px;
+}
+
+.big-mic {
+  width: 94px;
+  height: 94px;
+  border: 7px solid #dff0d5;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #188345, #075b32);
+  color: white;
+  font-size: 37px;
+  box-shadow: 0 8px 22px #075b3230;
+}
+
+.voice-center b {
+  color: var(--green);
+  font-size: 15px;
+}
+
+.voice-center small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.message-input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: white;
+}
+
+.message-input-area input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 10px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+}
+
+.message-input-area button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--green);
+  color: white;
+  font-size: 19px;
+}
+
+.input-hint {
+  margin: 10px 0;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* =========================================
+   BOTTOM NAVIGATION
+========================================= */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  min-height: 73px;
+  padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  z-index: 100;
+  box-shadow: 0 -5px 18px #143d2208;
+}
+
+.nav-item {
+  min-width: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: #829083;
+}
+
+.nav-item span {
+  font-size: 22px;
+}
+
+.nav-item small {
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.nav-item.active {
+  color: var(--green);
+}
+
+.nav-mic {
+  width: 53px;
+  height: 53px;
+  margin-top: -25px;
+  border: 5px solid #e9f4e3;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-size: 23px;
+  box-shadow: 0 5px 14px #075b3230;
+}
+
+/* =========================================
+   MODULE IFRAMES
+========================================= */
+
+.module-frame {
+  width: 100%;
+  height: calc(100vh - 150px);
+  min-height: 600px;
+  display: block;
+  border: 0;
+  background: #f8fbf6;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (min-width: 601px) {
+  .app {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    min-height: 235px;
+    padding: 24px 19px;
+  }
+
+  .hero h1 {
+    font-size: 27px;
+  }
+
+  .service-grid {
+    gap: 9px;
+    padding: 0 13px;
+  }
+
+  .service-card {
+    padding: 12px 9px;
+    min-height: 95px;
+    gap: 7px;
+  }
+
+  .service-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .service-text b {
+    font-size: 12px;
+  }
+
+  .screen-content {
+    padding: 13px;
+  }
+
+  .farmer-login-card {
+    padding: 27px 20px;
+  }
+
+  .farmer-login-card h1 {
+    font-size: 24px;
+  }
+}
